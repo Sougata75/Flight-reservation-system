@@ -14,7 +14,6 @@ export default function PassengerInfo() {
   const dispatch = useAppDispatch();
   const { isLoggedIn, isAuthLoading } = useAppSelector((state: any) => state.global);
 
-  // 1. ALL HOOKS MUST GO HERE BEFORE ANY EARLY RETURNS
   useEffect(() => {
     if (!isAuthLoading && !isLoggedIn) {
       router.push("/authentication");   
@@ -35,8 +34,6 @@ export default function PassengerInfo() {
     name: "passengers",
   });
 
-  // 2. NOW IT IS SAFE TO RETURN EARLY
-  // Prevent the form from flashing on the screen while redirecting
   if (isAuthLoading || !isLoggedIn) {
     return (
       <div className="w-full min-h-screen flex items-center justify-center">
@@ -47,20 +44,17 @@ export default function PassengerInfo() {
     );
   }
 
-  // 3. SUBMIT HANDLER
   const onSubmit = (data: z.input<typeof PassengerSchema>) => {
     dispatch(setPassengers(data));
     router.push("/booking/seat-selection"); 
   };
 
-  // 4. MAIN RENDER
   return (
     <div className="max-w-4xl mx-auto py-10 px-5">
       <h2 className="text-3xl font-bold mb-6">Passenger Information</h2>
       
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
-        
-        {/* --- CONTACT DETAILS --- */}
+
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
           <h3 className="text-xl font-bold mb-4 text-red-700">Contact Details</h3>
           <div className="flex gap-4">
@@ -77,7 +71,6 @@ export default function PassengerInfo() {
           </div>
         </div>
 
-        {/* --- DYNAMIC PASSENGER BLOCKS --- */}
         {fields.map((field, index) => (
           <div key={field.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 relative">
             <div className="flex justify-between items-center mb-4">
@@ -118,7 +111,6 @@ export default function PassengerInfo() {
           </div>
         ))}
 
-        {/* --- ADD PASSENGER BUTTON --- */}
         <button 
           type="button" 
           onClick={() => append({ firstName: "", lastName: "", gender: "Male", dob: "" })}
@@ -127,7 +119,6 @@ export default function PassengerInfo() {
           + Add Another Passenger
         </button>
 
-        {/* --- SUBMIT BUTTON --- */}
         <button type="submit" className="w-full py-4 bg-red-600 text-white font-bold text-xl rounded-xl hover:bg-red-700 shadow-md transition-colors">
           Continue to Seat Selection
         </button>

@@ -12,7 +12,7 @@ function Auth() {
 
   const dispatch = useAppDispatch()
   const {authTabChanger} = useAppSelector((state) => state.global)
-
+  
   return (
     <div className="w-full h-screen flex flex-wrap justify-center items-center bg-linear-to-tr from-red-500 via-red-200 to-cyan-500 ">
       <div className="bg-white/40 backdrop-blur-md w-[60%] h-[70%] flex flex-wrap justify-between">

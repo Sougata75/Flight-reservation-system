@@ -130,7 +130,7 @@ function Flights() {
 
         <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
   
-  {/* Flight Number */}
+
   <div className="w-full flex flex-col gap-2">
     <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Flight Number</label>
     <input 
@@ -145,7 +145,6 @@ function Flights() {
     )}
   </div>
 
-  {/* Service Type */}
   <div className="w-full flex flex-col gap-2">
     <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Service Type</label>
     <Controller
@@ -167,7 +166,6 @@ function Flights() {
     )}
   </div>
 
-  {/* Aircraft Model */}
   <div className="w-full flex flex-col gap-2">
     <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Aircraft Model</label>
     <Controller
@@ -196,7 +194,6 @@ function Flights() {
     )}
   </div>
 
-  {/* Departure Time */}
   <div className="w-full flex flex-col gap-2">
     <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Departure Time</label>
     <input 
@@ -204,7 +201,7 @@ function Flights() {
       type="datetime-local" 
       onChange={handleDepartureChange}
     />
-    {/* Notice how nested Zod objects require checking the parent first: errors.schedule?.field */}
+
     {errors.schedule?.departure_time && (
       <span className="text-red-600 font-semibold text-sm capitalize tracking-wider">
         {errors.schedule.departure_time.message as string}
@@ -212,7 +209,6 @@ function Flights() {
     )}
   </div>
 
-  {/* Base Price */}
   <div className="w-full flex flex-col gap-2">
     <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Base Price</label>
     <input 
@@ -227,7 +223,6 @@ function Flights() {
     )}
   </div>
 
-  {/* Submit Button */}
   <div className="w-full pt-4">
     <Button type="submit" className="w-full text-white text-xl font-semibold uppercase p-6 rounded-xl bg-red-700 hover:bg-red-800 transition-colors">
       Add Flight

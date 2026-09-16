@@ -10,7 +10,6 @@ import { fSearchData, tripChanger } from "@/store/slices/global.slice";
 import { airport } from "aviation-codes";
 import { bookingClass, tripType } from "@/services/json/flights.table";
 import { z } from "zod";
-import FlightSearch from "@/components/user/book/FlightSearch";
 import SearchFlightResult from "@/components/user/book/SearchFlightResult";
 
 function FlightSearchResulte() {
@@ -65,8 +64,7 @@ function FlightSearchResulte() {
     <>
 
     <section className="w-full border-b border-gray-200 shadow-sm z-10 px-8 py-5">
-        
-        {/* Trip Type Toggles */}
+
         <div className="flex gap-3 mb-5">
           {tripType.map((item) => (
             <button
@@ -83,13 +81,9 @@ function FlightSearchResulte() {
           ))}
         </div>
 
-        {/* Horizontal Form Container */}
-        {/* Note: Drop your React Hook Form <form onSubmit={...}> tag right here */}
-        {/* Your Exact Form UI */}
         <div className="w-full h-full flex flex-wrap justify-center pb-4">
           <form className="flex items-end gap-8" onSubmit={handleSubmit(onsubmit)}>
-            
-            {/* FROM */}
+
             <div className="flex flex-col gap-y-3">
               <label className="text-xl uppercase text-gray-700 font-bold tracking-widest">from</label>
               <div className="flex items-center bg-white p-5 h-20 rounded-xl shadow-md shadow-gray-300">
@@ -101,7 +95,7 @@ function FlightSearchResulte() {
                       value={value}
                       onChange={onChange}
                       instanceId="origin-select"
-                      options={airportOptions} // REPLACE WITH: airportOptions
+                      options={airportOptions}
                       styles={noBorderStyles}
                       placeholder="Search origin city..."
                       className="text-lg text-black w-90 border-none outline-none"
@@ -112,7 +106,6 @@ function FlightSearchResulte() {
               </div>
             </div>
 
-            {/* TO */}
             <div className="flex flex-col gap-y-3">
               <label className="text-xl uppercase text-gray-700 font-bold tracking-widest">to</label>
               <div className="flex items-center bg-white p-5 h-20 rounded-xl shadow-md shadow-gray-300">
@@ -124,7 +117,7 @@ function FlightSearchResulte() {
                       value={value}
                       onChange={onChange}
                       instanceId="destination-select"
-                      options={airportOptions} // REPLACE WITH: airportOptions
+                      options={airportOptions}
                       styles={noBorderStyles}
                       placeholder="Search destination city..."
                       className="text-lg text-black w-90 border-none outline-none"
@@ -135,7 +128,6 @@ function FlightSearchResulte() {
               </div>
             </div>
 
-            {/* DATE */}
             <div className="flex flex-col gap-y-3">
               <label className="text-xl uppercase text-gray-700 font-bold tracking-widest">date</label>
               <div className="flex items-center bg-white p-5 h-20 rounded-xl shadow-md shadow-gray-300 min-w-75">
@@ -150,7 +142,6 @@ function FlightSearchResulte() {
               </div>
             </div>
 
-            {/* CLASS */}
             <div className="flex flex-col gap-y-3">
               <label className="text-xl uppercase text-gray-700 font-bold tracking-widest">class</label>
               <div className="flex items-center bg-white p-5 h-20 rounded-xl shadow-md shadow-gray-300">
@@ -169,7 +160,6 @@ function FlightSearchResulte() {
               </div>
             </div>
 
-            {/* SUBMIT BUTTON */}
             <div className="flex flex-col">
               <div className="flex items-center bg-white h-20 rounded-xl shadow-md shadow-gray-300">
                 <button type="submit" className="w-74 px-8 rounded-xl h-full bg-red-700 hover:bg-red-800 hover:-translate-y-2 transition-all duration-500 text-3xl text-white font-semibold capitalize whitespace-nowrap">

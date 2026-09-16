@@ -9,20 +9,15 @@ import { useLatestBooking } from "@/hooks/useBookings";
 export default function SuccessPage() {
   const router = useRouter();
   
-  // 1. Get Auth State from Redux Toolkit
   const { isLoggedIn, isAuthLoading } = useAppSelector((state: any) => state.global);
-  
-  // 2. Fetch Data from TanStack Query Hook
   const { data: booking, isLoading, isError } = useLatestBooking();
 
-  // 3. Auth Guard
   useEffect(() => {
     if (!isAuthLoading && !isLoggedIn) {
       router.push("/authentication");
     }
   }, [isLoggedIn, isAuthLoading, router]);
 
-  // --- UI: LOADING STATE ---
   if (isAuthLoading || isLoading) {
     return (
       <div className="w-full min-h-screen flex flex-col items-center justify-center bg-[#f4f5f7]">
@@ -32,7 +27,6 @@ export default function SuccessPage() {
     );
   }
 
-  // --- UI: ERROR / EMPTY STATE ---
   if (isError || !booking) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#f4f5f7] px-5">
@@ -45,10 +39,9 @@ export default function SuccessPage() {
     );
   }
 
-  // --- UI: MAIN TICKET ---
   const flight = booking.outbound_flight;
   const primaryPassenger = booking.passengers[0]; 
-  const pnr = booking.id.toString().substring(0, 6).toUpperCase() + "EV"; // Mock PNR generation
+  const pnr = booking.id.toString().substring(0, 6).toUpperCase() + "EV";
 
   const formatTime = (isoString?: string) => {
     if (!isoString) return "--:--";
@@ -63,7 +56,6 @@ export default function SuccessPage() {
   return (
     <div className="w-full min-h-screen bg-[#f4f5f7] py-16 px-5 flex flex-col items-center font-sans">
       
-      {/* Success Header */}
       <div className="flex flex-col items-center text-center mb-12">
         <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6 shadow-sm">
           <CheckCircle2 className="w-10 h-10" />
@@ -76,10 +68,8 @@ export default function SuccessPage() {
         </p>
       </div>
 
-      {/* --- THE TICKET --- */}
       <div className="relative max-w-4xl w-full bg-white rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden border border-gray-100">
-        
-        {/* Left Side: Main Ticket (70%) */}
+
         <div className="flex-1 p-8 md:p-10">
           <div className="flex justify-between items-center border-b border-gray-100 pb-6 mb-6">
             <h2 className="text-2xl font-black text-[#d9232d] tracking-widest uppercase">The NextFly</h2>
@@ -89,7 +79,6 @@ export default function SuccessPage() {
             </div>
           </div>
 
-          {/* Flight Route */}
           <div className="flex justify-between items-center mb-10">
             <div className="flex flex-col">
               <span className="text-5xl font-black text-gray-900">{flight.origin}</span>
@@ -111,7 +100,6 @@ export default function SuccessPage() {
             </div>
           </div>
 
-          {/* Passenger & Flight Details Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-gray-50 p-6 rounded-2xl">
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Passenger</p>
@@ -132,15 +120,12 @@ export default function SuccessPage() {
           </div>
         </div>
 
-        {/* --- PERFORATED LINE (Desktop only) --- */}
         <div className="hidden md:flex flex-col items-center justify-between relative w-0 border-l-2 border-dashed border-gray-200">
            <div className="w-6 h-6 bg-[#f4f5f7] rounded-full absolute -top-3 -left-3.25"></div>
            <div className="w-6 h-6 bg-[#f4f5f7] rounded-full absolute -bottom-3 -left-3.25"></div>
         </div>
 
-        {/* Right Side: Boarding Stub (30%) */}
         <div className="md:w-[30%] bg-[#1c1c1e] p-8 md:p-10 flex flex-col justify-between text-white border-t-2 md:border-t-0 border-dashed border-gray-600 md:border-none relative">
-          {/* Mobile cutouts */}
           <div className="md:hidden w-6 h-6 bg-[#f4f5f7] rounded-full absolute -top-3 -left-3"></div>
           <div className="md:hidden w-6 h-6 bg-[#f4f5f7] rounded-full absolute -top-3 -right-3"></div>
 
@@ -155,7 +140,6 @@ export default function SuccessPage() {
             <p className="text-sm font-semibold text-gray-300">{flight.aircraft_model || "Boeing 787"}</p>
           </div>
 
-          {/* Fake Barcode CSS Hack */}
           <div className="mt-8 flex gap-1 h-12 w-full opacity-80 mix-blend-screen">
             {[...Array(30)].map((_, i) => (
               <div key={i} className="bg-white h-full" style={{ width: `${Math.random() * 4 + 1}px` }}></div>
@@ -165,7 +149,6 @@ export default function SuccessPage() {
 
       </div>
 
-      {/* Actions */}
       <div className="mt-12 flex gap-4">
         <button 
           onClick={() => window.print()}
