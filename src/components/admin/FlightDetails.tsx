@@ -53,7 +53,7 @@ export default function FlightDetailsModal() {
             <div className="bg-gray-50 border border-gray-100 p-6 rounded-xl flex items-center justify-between">
               <div className="flex flex-col items-center">
                 <span className="text-sm text-gray-500 font-semibold mb-1 uppercase tracking-widest">Origin</span>
-                <span className="text-4xl font-bold text-gray-900">{selectedFlight.aircraft_model.active_route.destination}</span>
+                <span className="text-4xl font-bold text-gray-900">{selectedFlight?.aircraft_model?.active_route?.destination}</span>
               </div>
               <div className="flex flex-col items-center px-4">
                 <Plane className="text-gray-400 mb-2" size={24} />
@@ -61,7 +61,7 @@ export default function FlightDetailsModal() {
               </div>
               <div className="flex flex-col items-center">
                 <span className="text-sm text-gray-500 font-semibold mb-1 uppercase tracking-widest">Destination</span>
-                <span className="text-4xl font-bold text-gray-900">{selectedFlight.aircraft_model.active_route.destination}</span>
+                <span className="text-4xl font-bold text-gray-900">{selectedFlight?.aircraft_model?.active_route?.destination}</span>
               </div>
             </div>
 

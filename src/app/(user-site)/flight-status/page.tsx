@@ -180,19 +180,19 @@ export default function FlightStatusPage() {
                 </div>
 
                 <div className="text-right">
-                  <h3 className="text-5xl font-black text-gray-900">{result.destination.code}</h3>
-                  <p className="font-bold text-gray-500">{result.destination.city}</p>
+                  <h3 className="text-5xl font-black text-gray-900">{result?.destination.code}</h3>
+                  <p className="font-bold text-gray-500">{result?.destination.city}</p>
                 </div>
               </div>
 
               <div className="flex justify-between items-center text-sm">
                 <div>
-                  <p className="font-bold text-gray-900 text-lg">{formatTime(result.schedule.departure_time)}</p>
+                  <p className="font-bold text-gray-900 text-lg">{formatTime(result?.schedule.departure_time)}</p>
                   <p className="text-gray-400 font-semibold text-xs uppercase tracking-widest">Scheduled Departure</p>
                 </div>
                 <div className="text-right">
                   <p className="font-bold text-lg text-green-600">
-                    {formatTime(result.schedule.estimated_arrival)}
+                    {formatTime(result?.schedule.estimated_arrival)}
                   </p>
                   <p className="text-gray-400 font-semibold text-xs uppercase tracking-widest">Estimated Arrival</p>
                 </div>
@@ -204,28 +204,28 @@ export default function FlightStatusPage() {
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1">
                   <MapPin className="w-3 h-3"/> Dep Terminal
                 </p>
-                <p className="text-2xl font-black text-gray-900">{result.origin.terminal}</p>
+                <p className="text-2xl font-black text-gray-900">{result?.origin.terminal}</p>
               </div>
               
               <div className="p-6">
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1">
                   <ArrowRight className="w-3 h-3"/> Dep Gate
                 </p>
-                <p className="text-2xl font-black text-gray-900">{result.origin.gate}</p>
+                <p className="text-2xl font-black text-gray-900">{result?.origin.gate}</p>
               </div>
 
               <div className="p-6">
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1">
                   <MapPin className="w-3 h-3"/> Arr Terminal
                 </p>
-                <p className="text-2xl font-black text-gray-900">{result.destination.terminal}</p>
+                <p className="text-2xl font-black text-gray-900">{result?.destination.terminal}</p>
               </div>
 
               <div className="p-6 bg-orange-50/50">
                 <p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest mb-2 flex items-center gap-1">
                   <Info className="w-3 h-3"/> Baggage
                 </p>
-                <p className="text-2xl font-black text-gray-900">{result.destination.baggage}</p>
+                <p className="text-2xl font-black text-gray-900">{result?.destination.baggage}</p>
               </div>
             </div>
           </div>

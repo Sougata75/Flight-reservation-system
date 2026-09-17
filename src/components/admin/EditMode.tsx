@@ -57,8 +57,8 @@ function EditMode() {
 
     if (selectedAircraft && selectedAircraft.active_route) {
       const route = routeConfig.find(
-        (r) => r.origin === selectedAircraft.active_route.origin &&
-               r.destination === selectedAircraft.active_route.destination
+        (r) => r?.origin === selectedAircraft?.active_route?.origin &&
+               r?.destination === selectedAircraft?.active_route?.destination
       );
 
       if (route) {
@@ -219,9 +219,9 @@ function EditMode() {
                 const selectedIndex = aircraftConfigs.findIndex(
                   (plane) =>
                     field.value &&
-                    plane.model === field.value.model &&
-                    plane.active_route.origin === field.value.active_route.origin &&
-                    plane.active_route.destination === field.value.active_route.destination
+                    plane.model === field?.value?.model &&
+                    plane?.active_route?.origin === field?.value?.active_route?.origin &&
+                    plane?.active_route?.destination === field?.value?.active_route?.destination
                 );
 
                 return (
@@ -236,7 +236,7 @@ function EditMode() {
                     <option value="" disabled>Choose aircraft model</option>
                     {aircraftConfigs.map((item, index) => (
                       <option key={`aircraft-${index}`} value={index}>
-                        {item.model} - ( {item.active_route.origin} - {item.active_route.destination} )
+                        {item.model} - ( {item?.active_route.origin} - {item?.active_route?.destination} )
                       </option>
                     ))}
                   </select>

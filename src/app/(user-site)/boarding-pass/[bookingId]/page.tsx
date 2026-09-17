@@ -89,7 +89,7 @@ export default function BoardingPassPage() {
               </div>
               <div className="relative z-10 text-right">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-red-200 mb-1">Flight</p>
-                <h2 className="text-3xl font-black">{flight.flight_number}</h2>
+                <h2 className="text-3xl font-black">{flight?.flight_number}</h2>
               </div>
             </div>
 
@@ -97,7 +97,7 @@ export default function BoardingPassPage() {
               <div className="flex justify-between items-center mb-8">
                 <div className="text-left">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">From</p>
-                  <p className="text-5xl font-black text-gray-900">{flight.origin}</p>
+                  <p className="text-5xl font-black text-gray-900">{flight?.origin}</p>
                 </div>
                 <div className="flex-1 flex flex-col items-center px-4">
                    <Plane className="w-6 h-6 text-gray-300 mb-2" />
@@ -105,26 +105,26 @@ export default function BoardingPassPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">To</p>
-                  <p className="text-5xl font-black text-gray-900">{flight.destination}</p>
+                  <p className="text-5xl font-black text-gray-900">{flight?.destination}</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-gray-50 p-6 rounded-2xl border border-gray-100">
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Passenger</p>
-                  <p className="font-bold text-gray-900 capitalize">{passenger.firstName} {passenger.lastName}</p>
+                  <p className="font-bold text-gray-900 capitalize">{passenger?.firstName} {passenger?.lastName}</p>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Boarding Time</p>
-                  <p className="font-bold text-[#d9232d]">{getBoardingTime(flight.schedule?.departure_time)}</p>
+                  <p className="font-bold text-[#d9232d]">{getBoardingTime(flight?.schedule?.departure_time)}</p>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Departure</p>
-                  <p className="font-bold text-gray-900">{formatTime(flight.schedule?.departure_time)}</p>
+                  <p className="font-bold text-gray-900">{formatTime(flight?.schedule?.departure_time)}</p>
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Class</p>
-                  <p className="font-bold text-gray-900 uppercase">{passenger.cabin || "Economy"}</p>
+                  <p className="font-bold text-gray-900 uppercase">{passenger?.cabin || "Economy"}</p>
                 </div>
               </div>
             </div>

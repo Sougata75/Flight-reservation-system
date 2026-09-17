@@ -81,7 +81,7 @@ export default function SuccessPage() {
 
           <div className="flex justify-between items-center mb-10">
             <div className="flex flex-col">
-              <span className="text-5xl font-black text-gray-900">{flight.origin}</span>
+              <span className="text-5xl font-black text-gray-900">{flight?.origin}</span>
               <span className="text-sm font-semibold text-gray-500 mt-2 flex items-center gap-1"><MapPin className="w-3 h-3"/> Origin</span>
             </div>
             
@@ -89,13 +89,13 @@ export default function SuccessPage() {
               <Plane className="w-8 h-8 text-gray-300 mb-2" />
               <div className="w-full border-t-2 border-dashed border-gray-300 relative">
                  <div className="absolute left-1/2 -top-3 bg-white px-2 text-xs font-bold text-gray-400 -translate-x-1/2">
-                   Flight {flight.flight_number}
+                   Flight {flight?.flight_number}
                  </div>
               </div>
             </div>
 
             <div className="flex flex-col text-right">
-              <span className="text-5xl font-black text-gray-900">{flight.destination}</span>
+              <span className="text-5xl font-black text-gray-900">{flight?.destination}</span>
               <span className="text-sm font-semibold text-gray-500 mt-2 flex items-center justify-end gap-1"><MapPin className="w-3 h-3"/> Destination</span>
             </div>
           </div>
@@ -103,19 +103,19 @@ export default function SuccessPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-gray-50 p-6 rounded-2xl">
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Passenger</p>
-              <p className="font-bold text-gray-900 capitalize">{primaryPassenger.firstName} {primaryPassenger.lastName}</p>
+              <p className="font-bold text-gray-900 capitalize">{primaryPassenger?.firstName} {primaryPassenger?.lastName}</p>
             </div>
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Date</p>
-              <p className="font-bold text-gray-900 flex items-center gap-1.5"><Calendar className="w-4 h-4 text-[#d9232d]"/> {formatDate(flight.schedule?.departure_time)}</p>
+              <p className="font-bold text-gray-900 flex items-center gap-1.5"><Calendar className="w-4 h-4 text-[#d9232d]"/> {formatDate(flight?.schedule?.departure_time)}</p>
             </div>
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Departure</p>
-              <p className="font-bold text-gray-900 flex items-center gap-1.5"><Clock className="w-4 h-4 text-[#d9232d]"/> {formatTime(flight.schedule?.departure_time)}</p>
+              <p className="font-bold text-gray-900 flex items-center gap-1.5"><Clock className="w-4 h-4 text-[#d9232d]"/> {formatTime(flight?.schedule?.departure_time)}</p>
             </div>
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Class</p>
-              <p className="font-bold text-[#d9232d] uppercase">{primaryPassenger.cabin || "Economy"}</p>
+              <p className="font-bold text-[#d9232d] uppercase">{primaryPassenger?.cabin || "Economy"}</p>
             </div>
           </div>
         </div>
@@ -131,13 +131,13 @@ export default function SuccessPage() {
 
           <div>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Seat</p>
-            <p className="text-5xl font-black text-[#d9232d] mb-8">{primaryPassenger.seat || "TBA"}</p>
+            <p className="text-5xl font-black text-[#d9232d] mb-8">{primaryPassenger?.seat || "TBA"}</p>
 
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Gate</p>
             <p className="text-2xl font-bold text-white mb-8">TBA</p>
 
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Aircraft</p>
-            <p className="text-sm font-semibold text-gray-300">{flight.aircraft_model || "Boeing 787"}</p>
+            <p className="text-sm font-semibold text-gray-300">{flight?.aircraft_model || "Boeing 787"}</p>
           </div>
 
           <div className="mt-8 flex gap-1 h-12 w-full opacity-80 mix-blend-screen">

@@ -68,7 +68,7 @@ export default function CheckInManagementPage() {
 
         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col text-center md:text-left w-full md:w-auto">
-            <span className="text-4xl font-black text-gray-900">{flight.origin}</span>
+            <span className="text-4xl font-black text-gray-900">{flight?.origin}</span>
             <span className="text-sm font-semibold text-gray-500 mt-1 flex items-center justify-center md:justify-start gap-1"><MapPin className="w-3 h-3"/> Origin</span>
           </div>
           
@@ -82,7 +82,7 @@ export default function CheckInManagementPage() {
           </div>
 
           <div className="flex flex-col text-center md:text-right w-full md:w-auto">
-            <span className="text-4xl font-black text-gray-900">{flight.destination}</span>
+            <span className="text-4xl font-black text-gray-900">{flight?.destination}</span>
             <span className="text-sm font-semibold text-gray-500 mt-1 flex items-center justify-center md:justify-end gap-1"><MapPin className="w-3 h-3"/> Destination</span>
           </div>
         </div>
@@ -97,14 +97,14 @@ export default function CheckInManagementPage() {
                     <User className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 capitalize">{passenger.firstName} {passenger.lastName}</p>
-                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{passenger.cabin || "Economy"}</p>
+                    <p className="font-bold text-gray-900 capitalize">{passenger?.firstName} {passenger?.lastName}</p>
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{passenger?.cabin || "Economy"}</p>
                   </div>
                 </div>
                 <div className="text-right flex items-center gap-3">
                   <div className="flex flex-col items-end">
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Seat</p>
-                    <p className="text-lg font-black text-[#d9232d]">{passenger.seat || "TBA"}</p>
+                    <p className="text-lg font-black text-[#d9232d]">{passenger?.seat || "TBA"}</p>
                   </div>
                   <Armchair className="w-5 h-5 text-gray-300" />
                 </div>

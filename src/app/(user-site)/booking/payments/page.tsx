@@ -158,7 +158,7 @@ export default function PaymentPage() {
               <div className="flex justify-between items-center mt-2">
                 <div className="font-bold text-lg">{selectedOutboundFlight.origin}</div>
                 <div className="text-gray-400 text-sm">➔</div>
-                <div className="font-bold text-lg">{selectedOutboundFlight.destination}</div>
+                <div className="font-bold text-lg">{selectedOutboundFlight?.destination}</div>
               </div>
               <p className="text-sm text-gray-500 mt-1">Flight {selectedOutboundFlight.flight_number}</p>
             </div>
@@ -170,11 +170,11 @@ export default function PaymentPage() {
                    <span className="text-[10px] font-bold bg-gray-100 px-2 py-1 rounded-full text-gray-600 uppercase tracking-widest">{cabinName}</span>
                 </div>
                 <div className="flex justify-between items-center mt-2">
-                  <div className="font-bold text-lg">{selectedReturnFlight.origin}</div>
+                  <div className="font-bold text-lg">{selectedReturnFlight?.origin}</div>
                   <div className="text-gray-400 text-sm">➔</div>
-                  <div className="font-bold text-lg">{selectedReturnFlight.destination}</div>
+                  <div className="font-bold text-lg">{selectedReturnFlight?.destination}</div>
                 </div>
-                <p className="text-sm text-gray-500 mt-1">Flight {selectedReturnFlight.destination}</p>
+                <p className="text-sm text-gray-500 mt-1">Flight {selectedReturnFlight?.destination}</p>
               </div>
             )}
 
@@ -182,7 +182,7 @@ export default function PaymentPage() {
               <p className="text-xs font-bold text-gray-500 uppercase mb-2">Passengers</p>
               {passengerData.passengers.map((p: any, idx: number) => (
                 <div key={idx} className="flex justify-between text-sm mb-1">
-                  <span className="font-semibold text-gray-700 capitalize">{p.firstName} {p.lastName}</span>
+                  <span className="font-semibold text-gray-700 capitalize">{p?.firstName} {p?.lastName}</span>
                   <span className="font-bold text-red-600">Seat {selectedSeats[idx] || "TBA"}</span>
                 </div>
               ))}
