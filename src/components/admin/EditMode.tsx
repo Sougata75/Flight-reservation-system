@@ -1,3 +1,5 @@
+"use client";
+
 import { useFlightAdd } from "@/hooks/useFlight";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { routeConfig } from "@/services/json/airCraft.routeConfiguration";
@@ -36,7 +38,6 @@ function EditMode() {
   const selectedAircraft = watch("aircraft_model");
   const currentDepartureTime = watch("schedule.departure_time");
 
-  // Helper to format ISO string to HTML datetime-local format (YYYY-MM-DDThh:mm)
   const formatForDateTimeInput = (isoString: string) => {
     if (!isoString) return "";
     try {
@@ -46,80 +47,86 @@ function EditMode() {
     }
   };
 
-  // 1. Fix the date handler to ALWAYS append the "Z" so Zod's .datetime() is happy
-const handleDepartureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const departureValue = e.target.value;
+  const handleDepartureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const departureValue = e.target.value;
 
-  if (!departureValue) return;
-  const depDate = new Date(departureValue);
+    if (!departureValue) return;
+    const depDate = new Date(departureValue);
 
-  // Force strict ISO string with 'Z' for Zod validation
-  setValue("schedule.departure_time", depDate.toISOString(), { shouldValidate: true });
+    setValue("schedule.departure_time", depDate.toISOString(), { shouldValidate: true });
 
-  if (selectedAircraft && selectedAircraft.active_route) {
-    const route = routeConfig.find(
-      (r) => r.origin === selectedAircraft.active_route.origin &&
-             r.destination === selectedAircraft.active_route.destination
-    );
+    if (selectedAircraft && selectedAircraft.active_route) {
+      const route = routeConfig.find(
+        (r) => r.origin === selectedAircraft.active_route.origin &&
+               r.destination === selectedAircraft.active_route.destination
+      );
 
-    if (route) {
-      const hoursMatch = route.duration.match(/(\d+)h/);
-      const minsMatch = route.duration.match(/(\d+)m/);
+      if (route) {
+        const hoursMatch = route.duration.match(/(\d+)h/);
+        const minsMatch = route.duration.match(/(\d+)m/);
 
-      const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
-      const mins = minsMatch ? parseInt(minsMatch[1], 10) : 0;
+        const hours = hoursMatch ? parseInt(hoursMatch[1], 10) : 0;
+        const mins = minsMatch ? parseInt(minsMatch[1], 10) : 0;
 
-      const arrDate = new Date(depDate.getTime());
-      arrDate.setHours(arrDate.getHours() + hours);
-      arrDate.setMinutes(arrDate.getMinutes() + mins);
+        const arrDate = new Date(depDate.getTime());
+        arrDate.setHours(arrDate.getHours() + hours);
+        arrDate.setMinutes(arrDate.getMinutes() + mins);
 
-      // Force strict ISO string with 'Z' for Zod validation
-      setValue("schedule.arrival_time", arrDate.toISOString(), { shouldValidate: true });
+        setValue("schedule.arrival_time", arrDate.toISOString(), { shouldValidate: true });
+      }
     }
-  }
-};
+  };
 
-// 2. Fix the reset function so aircraft_model maps correctly
-useEffect(() => {
-  if (selectedFlight) {
-    
-    // Ensure we handle the aircraft model correctly whether it's a string from the DB or already an object
-    const flightAircraftModelString = typeof selectedFlight.aircraft_model === 'string' 
-      ? selectedFlight.aircraft_model 
-      : selectedFlight.aircraft_model?.model;
+  useEffect(() => {
+    if (selectedFlight) {
+      // 1. Cast selectedFlight to 'any' so we can safely read Supabase's flat DB structure
+      const flight = selectedFlight as any;
 
-    const matchedAircraft = aircraftConfigs.find(plane => plane.model === flightAircraftModelString);
+      // 2. Get the model name whether it's a raw string (DB) or an object
+      const flightAircraftModelString = typeof flight.aircraft_model === 'string' 
+        ? flight.aircraft_model 
+        : flight.aircraft_model?.model;
 
-    // Format existing dates to ensure they have the 'Z' for Zod
-    const formatExistingDate = (dateStr: string) => {
-      if (!dateStr) return "";
-      try {
-        return new Date(dateStr).toISOString();
-      } catch {
-        return "";
-      }
-    };
+      // 3. Safely get origin/destination (either from root DB columns or nested object)
+      const flightOrigin = flight.origin || flight.aircraft_model?.active_route?.origin;
+      const flightDestination = flight.destination || flight.aircraft_model?.active_route?.destination;
 
-    reset({
-      flight_number: selectedFlight.flight_number || "",
-      status: selectedFlight.service_type || "",
-      service_type: selectedFlight.service_type || "",
-      base_price: Number(selectedFlight.base_price) || 0,
-      aircraft_model: matchedAircraft as any, 
-      schedule: {
-        departure_time: formatExistingDate(selectedFlight.schedule?.departure_time),
-        arrival_time: formatExistingDate(selectedFlight.schedule?.arrival_time)
-      }
-    });
-  }
-}, [selectedFlight, reset]);
+      // 4. Find the exact matching aircraft using the unique origin/destination
+      const matchedAircraft = aircraftConfigs.find(
+        (plane) => 
+          plane.model === flightAircraftModelString &&
+          plane.active_route?.origin === flightOrigin &&
+          plane.active_route?.destination === flightDestination
+      ) || aircraftConfigs.find((plane) => plane.model === flightAircraftModelString);
 
-// 3. (Optional but helpful) Add this inside your component to debug future Zod errors
-useEffect(() => {
-  if (Object.keys(errors).length > 0) {
-    console.log("Zod Validation Errors Blocking Submit:", errors);
-  }
-}, [errors]);
+      const formatExistingDate = (dateStr: string) => {
+        if (!dateStr) return "";
+        try {
+          return new Date(dateStr).toISOString();
+        } catch {
+          return "";
+        }
+      };
+
+      reset({
+        flight_number: flight.flight_number || "",
+        status: flight.status || flight.service_type || "Scheduled", 
+        service_type: flight.service_type || "",
+        base_price: Number(flight.base_price) || 0,
+        aircraft_model: matchedAircraft as any, 
+        schedule: {
+          departure_time: formatExistingDate(flight.schedule?.departure_time),
+          arrival_time: formatExistingDate(flight.schedule?.arrival_time)
+        }
+      });
+    }
+  }, [selectedFlight, reset]);
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      console.log("Zod Validation Errors Blocking Submit:", errors);
+    }
+  }, [errors]);
 
   const onSubmit = (data: z.input<typeof flightUpdateSchema>) => {
     if (!selectedFlight?.id) return;
@@ -157,7 +164,6 @@ useEffect(() => {
 
         <form className="w-full flex flex-col gap-6 overflow-y-auto no-scrollbar pb-6 pt-4" onSubmit={handleSubmit(onSubmit)}>
 
-          {/* Flight Number (READ-ONLY) */}
           <div className="w-full flex flex-col gap-2">
             <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Flight Number</label>
             <input
@@ -173,7 +179,6 @@ useEffect(() => {
             )}
           </div>
 
-          {/* Flight Status */}
           <div className="w-full flex flex-col gap-2">
             <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Flight Status</label>
             <Controller
@@ -189,7 +194,6 @@ useEffect(() => {
             />
           </div>
 
-          {/* Service Type */}
           <div className="w-full flex flex-col gap-2">
             <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Service Type</label>
             <Controller
@@ -206,33 +210,41 @@ useEffect(() => {
             />
           </div>
 
-          {/* Aircraft Model */}
           <div className="w-full flex flex-col gap-2">
             <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Aircraft Model</label>
             <Controller
               name="aircraft_model"
               control={control}
-              render={({ field }) => (
-                <select
-                  className="w-full bg-white border border-gray-400 text-xl p-3 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
-                  value={field.value?.model || ""}
-                  onChange={(e) => {
-                    const selectedObject = aircraftConfigs.find((plane) => plane.model === e.target.value);
-                    field.onChange(selectedObject);
-                  }}
-                >
-                  <option value="" disabled>Choose aircraft model</option>
-                  {aircraftConfigs.map((item, index) => (
-                    <option key={`${item.model}-${index}`} value={item.model}>
-                      {item.model} - ( {item.active_route.origin} - {item.active_route.destination} )
-                    </option>
-                  ))}
-                </select>
-              )}
+              render={({ field }) => {
+                const selectedIndex = aircraftConfigs.findIndex(
+                  (plane) =>
+                    field.value &&
+                    plane.model === field.value.model &&
+                    plane.active_route.origin === field.value.active_route.origin &&
+                    plane.active_route.destination === field.value.active_route.destination
+                );
+
+                return (
+                  <select
+                    className="w-full bg-white border border-gray-400 text-xl p-3 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+                    value={selectedIndex !== -1 ? selectedIndex : ""}
+                    onChange={(e) => {
+                      const exactSelectedObject = aircraftConfigs[Number(e.target.value)];
+                      field.onChange(exactSelectedObject);
+                    }}
+                  >
+                    <option value="" disabled>Choose aircraft model</option>
+                    {aircraftConfigs.map((item, index) => (
+                      <option key={`aircraft-${index}`} value={index}>
+                        {item.model} - ( {item.active_route.origin} - {item.active_route.destination} )
+                      </option>
+                    ))}
+                  </select>
+                );
+              }}
             />
           </div>
 
-          {/* Departure Time */}
           <div className="w-full flex flex-col gap-2">
             <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Departure Time</label>
             <input
@@ -248,7 +260,6 @@ useEffect(() => {
             )}
           </div>
 
-          {/* Base Price */}
           <div className="w-full flex flex-col gap-2">
             <label className="text-[16px] font-bold tracking-widest uppercase text-gray-700">Base Price</label>
             <input
@@ -263,7 +274,6 @@ useEffect(() => {
             )}
           </div>
 
-          {/* Submit Button */}
           <div className="w-full pt-4 shrink-0 pb-4">
             <Button 
               type="submit" 

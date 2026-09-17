@@ -98,7 +98,8 @@ export default function PaymentPage() {
         contactPhone: passengerData.contactPhone,
         passengers: passengersWithSeats,
         totalPrice: totalAmount,
-        paymentId: paymentId
+        paymentId: paymentId,
+        cabinName: cabinName,
       }, {
         onSuccess: () => {
           dispatch(resetSelection());

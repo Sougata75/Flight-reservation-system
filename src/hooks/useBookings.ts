@@ -5,6 +5,28 @@ import { CheckInForm } from "@/services/validation/passenger.validation";
 import { BookingPayload, SearchParams, UpgradeParams } from "@/typescript/interfaces/userData.interface";
 
 
+// export const useCreateBooking = () => {
+//   return useMutation({
+//     mutationFn: async (payload: BookingPayload) => {
+//       const bookingRecord = {
+//         user_id: payload.userId,
+//         outbound_flight_id: payload.outboundFlightId,
+//         return_flight_id: payload.returnFlightId,
+//         contact_email: payload.contactEmail,
+//         contact_phone: payload.contactPhone,
+//         passengers: payload.passengers,
+//         total_price: payload.totalPrice,
+//         payment_id: payload.paymentId,
+//         status: "confirmed"
+//       };
+
+//       const { data, error } = await supabase.from("bookings").insert(bookingRecord).select().single();
+//       if (error) throw error;
+//       return data;
+//     }
+//   });
+// };
+
 export const useCreateBooking = () => {
   return useMutation({
     mutationFn: async (payload: BookingPayload) => {
@@ -20,9 +42,49 @@ export const useCreateBooking = () => {
         status: "confirmed"
       };
 
-      const { data, error } = await supabase.from("bookings").insert(bookingRecord).select().single();
-      if (error) throw error;
-      return data;
+      const { data: bookingData, error: bookingError } = await supabase
+        .from("bookings")
+        .insert(bookingRecord)
+        .select()
+        .single();
+        
+      if (bookingError) throw bookingError;
+      const cabinDbMap: Record<string, string> = {
+        "Economy": "eco_booked",
+        "Premium Economy": "pre_eco_booked",
+        "Business": "biz_booked",
+        "First Class": "first_class_booked"
+      };
+      
+      const bookedColumn = cabinDbMap[payload.cabinName] || "eco_booked";
+      const numPassengers = payload.passengers.length;
+
+
+      const updateFlightSeats = async (flightId: string) => {
+        const { data: flight, error: fetchErr } = await supabase
+          .from("flights")
+          .select(bookedColumn)
+          .eq("id", flightId)
+          .single();
+          
+        if (fetchErr) throw fetchErr;
+
+        const currentBooked = (flight as Record<string, any>)[bookedColumn] || 0;
+        const { error: updateErr } = await supabase
+          .from("flights")
+          .update({ [bookedColumn]: currentBooked + numPassengers })
+          .eq("id", flightId);
+          
+        if (updateErr) throw updateErr;
+      };
+
+      await updateFlightSeats(payload.outboundFlightId);
+
+      if (payload.returnFlightId) {
+        await updateFlightSeats(payload.returnFlightId);
+      }
+
+      return bookingData;
     }
   });
 };

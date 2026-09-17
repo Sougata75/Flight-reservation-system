@@ -57,6 +57,7 @@ export interface BookingPayload {
   passengers: any[];
   totalPrice: number;
   paymentId: string;
+  cabinName: string; 
 }
 
 export interface UpgradeParams {

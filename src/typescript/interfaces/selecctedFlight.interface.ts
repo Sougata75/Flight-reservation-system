@@ -34,6 +34,7 @@ export interface Schedule {
 export interface FlightFormValues {
   flight_number: string;
   service_type: string;
+  status: string;
   base_price: number;
   aircraft_model: Aircraft;
   schedule: Schedule;

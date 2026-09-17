@@ -42,7 +42,7 @@ export default function FlightDetailsModal() {
           </DialogHeader>
 
           <div className="px-4 py-2 rounded-full bg-gray-100 border border-gray-200 font-bold text-gray-700 tracking-wider uppercase text-sm">
-            {selectedFlight.service_type || "Scheduled"}
+            {selectedFlight.status || "Scheduled"}
           </div>
         </div>
 
