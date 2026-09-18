@@ -1,36 +1,179 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✈️ NextFly
 
-## Getting Started
+NextFly is a full-stack flight reservation system designed to provide a seamless booking experience for users and a powerful management interface for administrators.
 
-First, run the development server:
+## 📖 Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**User Portal:** 
+Travelers can easily search for available flights, complete their bookings, manage seat selections, check-in online, and print their flight tickets.
+
+**Admin Dashboard:** 
+Administrators have access to a secure dashboard to manage the platform. Capabilities include adding, updating, reading, and deleting flights. Admins can also manage user accounts, handle ticket cancellations, and analyze platform data such as total revenue.
+
+## 🛠️ Tech Stack
+
+* **Framework:** Next.js
+* **State Management:** Redux Toolkit
+* **Data Fetching:** Tanstack Query
+* **UI Components:** Shadcn UI, Magic UI
+* **Language:** TypeScript
+* **Backend/Database:** Supabase
+
+## 📂 Folder Structure
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+├── 📁 public/
+│   ├── 📁 videos/
+│   ├── 🖼️ 36af1edea564af352dbcd841fd09de3fab0d029b.png
+│   ├── 📄 favicon.ico
+│   ├── 🖼️ file.svg
+│   ├── 🖼️ globe.svg
+│   ├── 🖼️ logo.png
+│   ├── 🖼️ next.svg
+│   ├── 🖼️ vercel.svg
+│   └── 🖼️ window.svg
+├── 📁 src/
+│   ├── 📁 app/
+│   │   ├── 📁 (auth)/
+│   │   │   └── 📁 authentication/
+│   │   │       └── 📄 page.tsx
+│   │   ├── 📁 (user-site)/
+│   │   │   ├── 📁 boarding-pass/
+│   │   │   │   └── 📁 [bookingId]/
+│   │   │   │       └── 📄 page.tsx
+│   │   │   ├── 📁 booking/
+│   │   │   │   ├── 📁 passenger-info/
+│   │   │   │   │   └── 📄 page.tsx
+│   │   │   │   ├── 📁 payments/
+│   │   │   │   │   └── 📄 page.tsx
+│   │   │   │   ├── 📁 seat-selection/
+│   │   │   │   │   └── 📄 page.tsx
+│   │   │   │   └── 📁 success/
+│   │   │   │       └── 📄 page.tsx
+│   │   │   ├── 📁 check-in/
+│   │   │   │   ├── 📁 [bookingId]/
+│   │   │   │   │   └── 📄 page.tsx
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 experience/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 flight-status/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 manage/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 profile/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 search/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 ticket/
+│   │   │   │   └── 📁 [id]/
+│   │   │   │       └── 📄 page.tsx
+│   │   │   ├── 📄 layout.tsx
+│   │   │   └── 📄 page.tsx
+│   │   ├── 📁 admin/
+│   │   │   ├── 📁 analytics/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 bookings/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 dashboard/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 flights/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 settings/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   ├── 📁 users/
+│   │   │   │   └── 📄 page.tsx
+│   │   │   └── 📄 layout.tsx
+│   │   ├── 📁 api/
+│   │   │   └── 📁 create-payment-intent/
+│   │   │       └── 📄 route.ts
+│   │   ├── 📄 favicon.ico
+│   │   ├── 🎨 globals.css
+│   │   ├── 📄 layout.tsx
+│   │   └── 📄 providers.tsx
+│   ├── 📁 banner/
+│   ├── 📁 components/
+│   │   ├── 📁 admin/
+│   │   │   ├── 📄 ActiveFlights.tsx
+│   │   │   ├── 📄 CapacitYProgress.tsx
+│   │   │   ├── 📄 EditMode.tsx
+│   │   │   ├── 📄 FlightDetails.tsx
+│   │   │   └── 📄 FlightStats.tsx
+│   │   ├── 📁 ui/
+│   │   │   ├── 📄 button.tsx
+│   │   │   ├── 📄 card.tsx
+│   │   │   ├── 📄 chart.tsx
+│   │   │   ├── 📄 dialog.tsx
+│   │   │   ├── 📄 input.tsx
+│   │   │   ├── 📄 label.tsx
+│   │   │   ├── 📄 progress.tsx
+│   │   │   ├── 📄 skeleton.tsx
+│   │   │   └── 📄 video-text.tsx
+│   │   ├── 📁 user/
+│   │   │   └── 📁 book/
+│   │   │       ├── 📄 DestinationDiscovery.tsx
+│   │   │       ├── 📄 FlightSearch.tsx
+│   │   │       ├── 📄 SearchFlightResult.tsx
+│   │   │       └── 📄 StripeCheckOutForm.tsx
+│   │   ├── 📄 Login.tsx
+│   │   ├── 📄 Logo.tsx
+│   │   └── 📄 Signup.tsx
+│   ├── 📁 hooks/
+│   │   ├── 📄 useAdminHooks.ts
+│   │   ├── 📄 useAuth.ts
+│   │   ├── 📄 useBookingData.ts
+│   │   ├── 📄 useBookings.ts
+│   │   ├── 📄 useFlight.ts
+│   │   ├── 📄 useFlightData.ts
+│   │   └── 📄 useRedux.ts
+│   ├── 📁 layouts/
+│   │   ├── 📁 admin/
+│   │   │   ├── 📄 Navbar.tsx
+│   │   │   └── 📄 Sidebar.tsx
+│   │   ├── 📄 Footer.tsx
+│   │   └── 📄 Header.tsx
+│   ├── 📁 lib/
+│   │   ├── 📄 supabaseClient.ts
+│   │   └── 📄 utils.ts
+│   ├── 📁 services/
+│   │   ├── 📁 helper/
+│   │   ├── 📁 json/
+│   │   │   ├── 📄 airCraft.routeConfiguration.ts
+│   │   │   ├── 📄 aircraftConfiguration.ts
+│   │   │   ├── 📄 flights.table.ts
+│   │   │   ├── 📄 nationality.counteries.ts
+│   │   │   ├── 📄 navigation.routes.ts
+│   │   │   └── 📄 user.authToken.ts
+│   │   └── 📁 validation/
+│   │       ├── 📄 auth.signupValidation.ts
+│   │       ├── 📄 flight.addValidation.ts
+│   │       ├── 📄 flightSearch.validation.ts
+│   │       └── 📄 passenger.validation.ts
+│   ├── 📁 store/
+│   │   ├── 📁 slices/
+│   │   │   └── 📄 global.slice.ts
+│   │   └── 📄 store.ts
+│   ├── 📁 typescript/
+│   │   ├── 📁 interfaces/
+│   │   │   ├── 📄 aircraftConfig.interface.ts
+│   │   │   ├── 📄 auth.interface.ts
+│   │   │   ├── 📄 interface.props.ts
+│   │   │   ├── 📄 interface.routes.ts
+│   │   │   ├── 📄 selecctedFlight.interface.ts
+│   │   │   └── 📄 userData.interface.ts
+│   │   └── 📁 types/
+│   │       └── 📄 redux.type.ts
+│   └── 📄 middleware.ts
+├── 📁 videos/
+├── ⚙️ .gitignore
+├── 📝 README.md
+├── ⚙️ components.json
+├── 📄 eslint.config.mjs
+├── 📄 next.config.ts
+├── ⚙️ package-lock.json
+├── ⚙️ package.json
+├── 📄 postcss.config.mjs
+├── ⚙️ tsconfig.json
+└── 📄 video.d.ts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
