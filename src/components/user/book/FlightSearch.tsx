@@ -139,7 +139,7 @@ const noBorderStyles = {
                              options={airportOptions}
                              styles={noBorderStyles}
                              placeholder="Search origin city..."
-                             className="text-lg text-black w-90 border-none outline-none"
+                             className="text-lg text-black w-70 border-none outline-none"
                              isSearchable={true}
                            />
                             )}
@@ -161,7 +161,7 @@ const noBorderStyles = {
                              options={airportOptions}
                              styles={noBorderStyles}
                              placeholder="Search destination city..."
-                             className="text-lg text-black w-90 border-none outline-none"
+                             className="text-lg text-black w-70 border-none outline-none"
                              isSearchable={true}
                            />
                             )}
@@ -174,11 +174,11 @@ const noBorderStyles = {
                 <div className="flex items-center bg-white p-5 h-20 rounded-xl shadow-md shadow-gray-300">
                     <div className="flex flex-col gap-1 border-r border-gray-300 w-[50%]">
                       <label className="text-sm text-gray-500 font-semibold capitalize">depart</label>
-                      <input type="date" className="w-50 text-black text-[18px] outline-none" min={today} {...register("date.depart")}/>
+                      <input type="date" className="w-30 text-black text-[18px] outline-none" min={today} {...register("date.depart")}/>
                     </div>
                     <div className="flex flex-col gap-1 border-l border-gray-300 w-[50%] px-2">
                       <label className={`${trip === "one-way" && "hidden"} text-sm text-gray-500 font-semibold capitalize`}>return</label>
-                      <input type="date" disabled={trip === "one-way"} className={`${trip === "one-way" && "opacity-0"} w-50 text-black text-[18px] outline-none`} min={today} {...register("date.return")}/>
+                      <input type="date" disabled={trip === "one-way"} className={`${trip === "one-way" && "opacity-0"} w-30 text-black text-[18px] outline-none`} min={today} {...register("date.return")}/>
                     </div>
                 </div>
                 </div>
@@ -190,7 +190,7 @@ const noBorderStyles = {
                     name="class"
                     control={control}
                     render={({field}) => (
-                      <select className="w-80 capitalize text-black text-[18px] outline-none" {...field}>
+                      <select className="w-60 capitalize text-black text-[18px] outline-none" {...field}>
                         <option value="" disabled>Select class</option>
                         {bookingClass.map((item) => (
                           <option className="capitalize" key={item} value={item}>{item}</option>
@@ -203,7 +203,7 @@ const noBorderStyles = {
 
                 <div className="flex flex-col">
                 <div className="flex items-center bg-white h-20 rounded-xl shadow-md shadow-gray-300">
-                    <button type="submit" className="w-76 rounded-xl h-full bg-red-700 hover:bg-red-800 hover:-translate-y-2 transition-all duration-500 text-3xl text-white font-semibold capitalize">search flights</button>
+                    <button type="submit" className="w-70 rounded-xl h-full bg-red-700 hover:bg-red-800 hover:-translate-y-2 transition-all duration-500 text-3xl text-white font-semibold capitalize">search flights</button>
                 </div>
                 </div>
             </form>

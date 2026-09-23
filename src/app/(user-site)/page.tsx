@@ -23,7 +23,7 @@ export default function Book() {
           </div>
         </div>
 
-        <div className="w-[90%] h-70 bg-white/20 backdrop-blur-lg border border-gray-300 shadow-lg shadow-black/30 rounded-2xl absolute top-205">
+        <div className="w-[90%] h-70 bg-white/20 backdrop-blur-lg border border-gray-300 shadow-lg shadow-black/30 rounded-2xl absolute top-155">
           <FlightSearch />
         </div>
       </section>
